@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -86,5 +88,14 @@ public class CharacterMovement : MonoBehaviour
     float GetMovementSpeed()
     {
         return Input.GetButton("Fire3") ? runSpeed : walkSpeed;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Quest"))
+        {
+            GameManager.Instance.UpdateQuestStatus();
+            SceneManager.LoadScene(1 + GameManager.Instance.currentQuest);
+        }
     }
 }
